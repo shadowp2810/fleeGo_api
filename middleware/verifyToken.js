@@ -5,7 +5,10 @@ const verifyToken = (req, res, next) => {
   if (authHeader) {
     const token = authHeader.split(" ")[1];
     jwt.verify(token, process.env.JWT_SEC, (err, user) => {
-      if (err) res.status(403).json("Token is not valid!");
+      if (err) {
+        res.status(403).json("Token is not valid!");
+        return;
+      }
       req.user = user;
       next();
     });
@@ -20,6 +23,7 @@ const verifyTokenAndAuthorization = (req, res, next) => {
       next();
     } else {
       res.status(403).json("You are not Authorized!");
+      return;
     }
   });
 };
@@ -30,6 +34,7 @@ const verifyTokenAndStore = (req, res, next) => {
       next();
     } else {
       res.status(403).json("You are not Authorized!");
+      return;
     }
   });
 };
@@ -40,6 +45,7 @@ const verifyTokenAndAdmin = (req, res, next) => {
       next();
     } else {
       res.status(403).json("You are not Authorized!");
+      return;
     }
   });
 };

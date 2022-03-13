@@ -13,8 +13,10 @@ router.get("/find/:id", verifyTokenAndAuthorization, async (req, res) => {
   try {
     const point = await Point.findById(req.params.id);
     res.status(200).json(point);
+    return;
   } catch (err) {
     res.status(500).json(err);
+    return;
   }
 });
 
